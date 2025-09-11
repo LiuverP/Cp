@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador Canal Telegram</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body {
+  margin:0;
+  font-family:'Roboto', sans-serif;
+  background:#1c1c1c;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  height:100vh;
+  padding-bottom:40px;
+}
+#simulator {
+  width:360px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#2c2f33;
+  box-shadow:0 4px 12px rgba(0,0,0,0.5);
+  text-align:center;
+  color:white;
+  position:relative;
+  padding:24px 16px;
+}
+#closeBtn {
+  position:absolute;
+  top:12px;
+  right:12px;
+  cursor:pointer;
+  transition:0.2s;
+}
+#closeBtn svg:hover { fill:#dddddd; }
+
+#simulator img {
+  width:119px;           /* ligeramente más pequeño */
+  height:119px;          /* mantiene proporción */
+  border-radius:50%;
+  margin-bottom:16px;
+  border:2px solid #0088cc;
+  user-select:none;
+  -webkit-user-drag:none;
+  pointer-events:none;
+  object-fit:cover;      /* evita aplastamiento */
+}
+
+.channel-name {
+  font-size:20px;
+  font-weight:500;
+  margin-bottom:4px;
+}
+.channel-sub {
+  font-size:14px;
+  color:#aaaaaa;
+  margin-bottom:24px;
+}
+#shareBtn {
+  width:100%;
+  background:#0088cc;
+  border:none;
+  color:white;
+  font-size:16px;
+  font-weight:500;
+  border-radius:8px;
+  padding:14px;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 2px 6px rgba(0,0,0,0.5);
+}
+#shareBtn:hover {
+  background:#007ab8;
+}
+#message {
+  margin-top:12px;
+  font-size:12px;
+  color:#bbbbbb;
+  line-height:1.2;
+}
+</style>
+</head>
+<body oncontextmenu="return false">
+
+<div id="simulator">
+  <!-- Botón cerrar con SVG -->
+  <div id="closeBtn">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+      <path d="M18.36 6.64a1 1 0 0 0-1.41 0L12 11.59 7.05 6.64a1 1 0 1 0-1.41 1.41L10.59 13l-4.95 4.95a1 1 0 1 0 1.41 1.41L12 14.41l4.95 4.95a1 1 0 0 0 1.41-1.41L13.41 13l4.95-4.95a1 1 0 0 0 0-1.41z"/>
+    </svg>
+  </div>
+  
+  <img src="https://iili.io/KzyN1UP.jpg" alt="Perfil Canal">
+  <div class="channel-name">👩🏻‍🎓Contenido Prohibido🍭</div>
+  <div class="channel-sub">Canal privado</div>
+  <button id="shareBtn">Compartir en Telegram 0/3</button>
+  <div id="message">Debes compartir el enlace 3 veces para acceder</div>
+</div>
+
+<script>
+let shares = 0;
+const requiredShares = 3;
+const shareBtn = document.getElementById("shareBtn");
+const messageDiv = document.getElementById("message");
+const closeBtn = document.getElementById("closeBtn");
+
+shareBtn.onclick = () => {
+  shares++;
+  if(shares < requiredShares){
+    shareBtn.textContent = `Compartir en Telegram ${shares}/${requiredShares}`;
+    window.open("https://t.me/share/url?url=💣𝙹𝙾𝙸𝙽 𝙵𝙰𝚂𝚃 https://t.me/AdulDatingBot/Chat","_blank");
+  } else {
+    shareBtn.textContent = "Solicitar unirme al canal";
+    messageDiv.textContent = "Este canal acepta nuevos suscriptores solo después de ser aprobados por un administrador";
+    shareBtn.onclick = () => {
+      window.open("https://t.me/addlist/Pk5dafooIwE0NDAx","_blank");
+    };
+  }
+};
+
+// Función cerrar
+closeBtn.onclick = () => {
+  window.close(); // intentará cerrar ventana
+  document.getElementById("simulator").style.display = "none"; // si no puede, oculta
+};
+
+// Protección de foto y teclado
+document.addEventListener('keydown', e => {
+  if(e.key==='PrintScreen' || (e.ctrlKey && ['s','u'].includes(e.key.toLowerCase()))){
+    e.preventDefault();
+    alert('🔒 Función desactivada por seguridad.');
+  }
+});
+</script>
+
+</body>
+</html>
